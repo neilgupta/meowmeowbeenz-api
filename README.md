@@ -21,7 +21,7 @@ The following features still need to be added:
 ## Getting Started
 
 1. Make sure you have Ruby 2.1 installed (`ruby -v`)
-2. Clone this repo
+2. Clone this repo (`git clone git@github.com:neilgupta/meowmeowbeenz-api.git`)
 3. Copy `config/database.yml.sample`, enter your username and password, and save as `config/database.yml`
 4. Copy `env.sample`, fill out config variables, and save as `.env`
 5. Run the following commands:
@@ -55,4 +55,4 @@ Neil Gupta https://github.com/neilgupta && http://metamorphium.com
 
 ## License
 
-The MIT License (MIT) Copyright (c) 2014 Neil Gupta. See LICENSE.txt
+The MIT License (MIT) Copyright (c) 2014 Neil Gupta. See [LICENSE.txt](https://raw.github.com/neilgupta/meowmeowbeenz-api/master/LICENSE.txt)
