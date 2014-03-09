@@ -6,4 +6,7 @@ Meowmeowbeenz::Application.routes.draw do
     get 'logout', 'search', on: :collection
     post 'give', on: :member
   end
+
+  root to: 'application#index'
+  get '/*path' => 'application#index'
 end

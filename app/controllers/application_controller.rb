@@ -14,7 +14,11 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, :with => :missingRecord
   rescue_from ActiveRecord::RecordInvalid, :with => :recordInvalidHandler
 
-  before_filter :require_token
+  before_filter :require_token, :except => [:index]
+
+  def index
+    render :text => "This is a test server for the MeowMeowBeenz API. See documentation at http://meowmeowbeenz.herokuapp.com/docs"
+  end
 
   def require_token
     raise UnauthorizedError.new("Invalid token") unless current_user
