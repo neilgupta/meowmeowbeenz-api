@@ -33,7 +33,7 @@ rake db:migrate
 foreman start -p 3000
 ```
 
-Access the documentation at http://localhost:3000/apipie and the API at http://localhost:3000/
+Access the documentation at http://localhost:3000/docs and the API at http://localhost:3000/
 
 ## Contributing
 
