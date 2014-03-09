@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   before_filter :require_token, :except => [:index]
 
   def index
-    render :text => "This is a test server for the MeowMeowBeenz API. See documentation at http://meowmeowbeenz.herokuapp.com/docs"
+    render :html => "This is a test server for the MeowMeowBeenz API. It is NOT production-ready or stable, and will be removed eventually.<br/><br/>See documentation at <a href='http://meowmeowbeenz.herokuapp.com/docs'>http://meowmeowbeenz.herokuapp.com/docs</a> or the GitHub project at <a href='https://github.com/neilgupta/meowmeowbeenz-api'>https://github.com/neilgupta/meowmeowbeenz-api</a> for more information."
   end
 
   def require_token
