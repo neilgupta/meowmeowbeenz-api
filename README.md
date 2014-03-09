@@ -7,6 +7,12 @@ MeowMeowBeenz let's you say how much you like, who you like, when you like, all 
 
 This project provides a restful API for powering the meowmeowbeenz mobile app.
 
+## Demo
+
+You can test out a demo of the API and read the docs at http://meowmeowbeenz.herokuapp.com
+
+This is running on Heroku's free tier, so it will be slow. Do NOT use this for development. Once you've tested the API out, you should clone this project and run it locally (see Getting Started).
+
 ## Progress
 
 So far, this api handles signing up, logging in, rating, and searching users.
@@ -16,6 +22,7 @@ So far, this api handles signing up, logging in, rating, and searching users.
 The following features still need to be added:
 
 * Send push notifications to mobile devices when they are given meowmeowbeenz or when their meowmeowbeenz level changes. I am thinking of using Amazon SNS ([with j7w1 gem](https://github.com/condor/j7w1)) for push notifications.
+* Add news feed functionality (see discussions on [r/meowmeowbeenz](http://www.reddit.com/r/Meowmeowbeenz/))
 * Tests
 
 If there are any features that should be added to this list, create a [new issue](https://github.com/neilgupta/meowmeowbeenz-api/issues).
