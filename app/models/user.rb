@@ -51,13 +51,13 @@ class User < ActiveRecord::Base
   end
 
   def beenz_given_by_user(user)
-    meows_received.where(reviewer: user).try(:beenz)
+    meows_received.where(reviewer: user).try(:first).try(:beenz)
   end
 
   def beenz
     b = ActiveRecord::Base.connection.execute("select SUM(beenz * weight)/SUM(weight) as score FROM ratings WHERE reviewee_id = #{id}")[0]['score']
     return 1 unless b
-    
+
     return case
     when b > 4.75 then 5
     when b > 4.25 then 4.5
