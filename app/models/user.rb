@@ -1,10 +1,16 @@
 require 'bcrypt'
 require 'securerandom'
 
-class User < ActiveRecord::Base  
+class User < ActiveRecord::Base
+  include BCrypt
+
   has_attached_file :photo
-  has_many :meows_given
-  has_many :meows_received
+  has_many :meows_given, class_name: "Rating",
+                         foreign_key: "reviewer_id",
+                         inverse_of: :reviewer
+  has_many :meows_received, class_name: "Rating",
+                            foreign_key: "reviewee_id",
+                            inverse_of: :reviewee
 
   has_and_belongs_to_many :ratings
 
@@ -17,6 +23,7 @@ class User < ActiveRecord::Base
   end
 
   def password
+    password_hash = read_attribute(:password)
     return nil unless password_hash
     @password ||= Password.new(password_hash)
   end
@@ -24,10 +31,10 @@ class User < ActiveRecord::Base
   def password=(new_pass)
     if new_pass.blank?
       @password = nil
-      self.password_hash = nil
+      write_attribute(:password, nil)
     else
       @password = Password.create(new_pass)
-      self.password_hash = @password
+      write_attribute(:password, @password)
     end
   end
 
@@ -48,8 +55,9 @@ class User < ActiveRecord::Base
   end
 
   def beenz
-    b = meows_received.select("SUM(score * weight)/SUM(weight)")
-    # b = ActiveRecord::Base.connection.execute("select SUM(score * weight)/SUM(weight) FROM ratings WHERE reviewee_id = #{id}")
+    b = ActiveRecord::Base.connection.execute("select SUM(beenz * weight)/SUM(weight) as score FROM ratings WHERE reviewee_id = #{id}")[0]['score']
+    return 1 unless b
+    
     return case
     when b > 4.75 then 5
     when b > 4.25 then 4.5
