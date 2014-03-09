@@ -10,6 +10,11 @@ class Rating < ActiveRecord::Base
   validates :reviewee, :presence => true
   validates :beenz,    :presence => true, numericality: true
   validates :weight,   :presence => true, numericality: true
+  validate :reviewer_cannot_be_reviewee
+
+  def reviewer_cannot_be_reviewee
+    errors.add(:reviewer, "can't give MeowMeowBeenz to self") if reviewer == reviewee
+  end
 
   def beenz=(new_beenz)
     set_weight
