@@ -11,18 +11,20 @@ This project provides a restful API for powering the meowmeowbeenz mobile app.
 
 So far, this api handles signing up, logging in, rating, and searching users.
 
-## Todo
+## TODO
 
 The following features still need to be added:
 
 * Send push notifications to mobile devices when they are given meowmeowbeenz or when their meowmeowbeenz level changes. I am thinking of using Amazon SNS ([with j7w1 gem](https://github.com/condor/j7w1)) for push notifications.
 * Tests
 
+If there are any features that should be added to this list, create a [new issue](https://github.com/neilgupta/meowmeowbeenz-api/issues).
+
 ## Getting Started
 
-1. Make sure you have Ruby 2.1 installed (`ruby -v`)
+1. Make sure you have Ruby 2 and Postgres 9 installed (`ruby -v && postgres --version`)
 2. Clone this repo (`git clone git@github.com:neilgupta/meowmeowbeenz-api.git`)
-3. Copy `config/database.yml.sample`, enter your username and password, and save as `config/database.yml`
+3. Copy `config/database.yml.sample`, enter your db username and password, and save as `config/database.yml`
 4. Copy `env.sample`, fill out config variables, and save as `.env`
 5. Run the following commands:
 
