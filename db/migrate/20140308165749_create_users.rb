@@ -4,7 +4,6 @@ class CreateUsers < ActiveRecord::Migration
       t.string :username, :null => false
       t.string :password, :null => false
       t.string :token
-      t.boolean :deleted, default: false
       t.attachment :photo
 
       t.timestamps

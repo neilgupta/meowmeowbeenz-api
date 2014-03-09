@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_filter :require_token, :except => [:create, :auth]
+  before_filter :require_token, :except => [:create, :login]
 
   def_param_group :token do
     param :token, String, :required => true, :desc => "User token"
@@ -65,7 +65,7 @@ class UsersController < ApplicationController
   api :POST, '/users/:username/give', "Give meowmeowbeenz to a user"
   param :beenz, Integer, :required => true, :desc => "Number of meowmeowbeenz to give user"
   param_group :token
-  def give_meows
+  def give
     u = User.includes(:meows_received).find_by_username(params[:username])
     current_user.meows_given.create(reviewee: u, beenz: params[:beenz])
 

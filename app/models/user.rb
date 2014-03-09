@@ -1,9 +1,7 @@
 require 'bcrypt'
 require 'securerandom'
 
-class User < ActiveRecord::Base
-  default_scope where(deleted: false)
-  
+class User < ActiveRecord::Base  
   has_attached_file :photo
   has_many :meows_given
   has_many :meows_received

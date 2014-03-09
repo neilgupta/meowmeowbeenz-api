@@ -31,6 +31,7 @@ GEM
       rails (>= 3.0.10)
     arel (4.0.2)
     atomic (1.1.15)
+    bcrypt (3.1.7)
     builder (3.1.4)
     climate_control (0.0.3)
       activesupport (>= 3.0)
@@ -125,6 +126,7 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers
   apipie-rails
+  bcrypt
   fog
   foreman
   paperclip
