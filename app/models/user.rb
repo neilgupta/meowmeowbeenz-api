@@ -55,8 +55,9 @@ class User < ActiveRecord::Base
   end
 
   def beenz
-    b = ActiveRecord::Base.connection.execute("select SUM(beenz * weight)/SUM(weight) as score FROM ratings WHERE reviewee_id = #{id}")[0]['score']
-    return 1 unless b
+    b = ActiveRecord::Base.connection.execute("
+      select SUM(beenz * weight)/SUM(weight) as score FROM ratings WHERE reviewee_id = #{id}
+    ")[0]['score'].to_f
 
     return case
     when b > 4.75 then 5
