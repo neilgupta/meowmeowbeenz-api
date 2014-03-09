@@ -8,5 +8,7 @@ class CreateRatings < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :ratings, [:reviewer_id, :reviewee_id], :unique => true
   end
 end

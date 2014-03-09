@@ -66,8 +66,8 @@ class UsersController < ApplicationController
   param :beenz, Integer, :required => true, :desc => "Number of meowmeowbeenz to give user"
   param_group :token
   def give
-    u = User.includes(:meows_received).find_by_username(params[:username])
-    current_user.meows_given.create(reviewee: u, beenz: params[:beenz])
+    u = User.find_by_username(params[:username])
+    current_user.give_beenz_to_user(params[:beenz], u)
 
     render json: u, root: false
   end

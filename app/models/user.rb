@@ -50,8 +50,18 @@ class User < ActiveRecord::Base
     photo.try(:url)
   end
 
-  def beenz_given_by_user(user)
+  def beenz_received_from_user(user)
     meows_received.where(reviewer: user).try(:first).try(:beenz)
+  end
+
+  def beenz_given_to_user(user)
+    meows_given.where(reviewee: user).try(:first).try(:beenz)
+  end
+
+  def give_beenz_to_user(beenz, user)
+    rating = meows_given.where(reviewee: user).try(:first) || meows_given.build(reviewee: user)
+    rating.beenz = beenz
+    rating.save!
   end
 
   def beenz

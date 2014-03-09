@@ -6,7 +6,7 @@ class UserSerializer < ActiveModel::Serializer
   end
 
   def beenz_given
-    object.beenz_given_by_user(current_user)
+    object.beenz_received_from_user(current_user)
   end
 
   def include_token?

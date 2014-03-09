@@ -9,19 +9,11 @@ class Rating < ActiveRecord::Base
   validates :reviewer, :presence => true
   validates :reviewee, :presence => true
   validates :beenz,    :presence => true, numericality: true
-
-  before_save :set_weight
+  validates :weight,   :presence => true, numericality: true
 
   def beenz=(new_beenz)
+    set_weight
     write_attribute(:beenz, new_beenz)
-    set_weight if reviewer
-    new_beenz
-  end
-
-  def reviewer=(new_reviewer)
-    write_attribute(:reviewer_id, new_reviewer.id)
-    set_weight if beenz
-    new_reviewer
   end
 
   private

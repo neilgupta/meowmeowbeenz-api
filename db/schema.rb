@@ -25,6 +25,8 @@ ActiveRecord::Schema.define(version: 20140308174257) do
     t.datetime "updated_at"
   end
 
+  add_index "ratings", ["reviewer_id", "reviewee_id"], name: "index_ratings_on_reviewer_id_and_reviewee_id", unique: true, using: :btree
+
   create_table "users", force: true do |t|
     t.string   "username",           null: false
     t.string   "password",           null: false
