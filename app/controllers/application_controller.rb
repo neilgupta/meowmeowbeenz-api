@@ -1,3 +1,6 @@
+# Needed to recognize ActiveRecord::RecordInvalid, not sure why...
+require "active_record/validations.rb"
+
 class ApplicationController < ActionController::Base
   class UnauthorizedError < StandardError; end
   class NotFoundError < StandardError; end
