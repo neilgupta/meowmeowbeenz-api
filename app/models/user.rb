@@ -62,12 +62,21 @@ class User < ActiveRecord::Base
     rating = meows_given.where(reviewee: user).try(:first) || meows_given.build(reviewee: user)
     rating.beenz = beenz
     rating.save!
+    user.calculate_beenz!
+  end
+
+  def days_since_creation
+    (DateTime.now.to_i - created_at.to_i)/(60.0*60*24)
+  end
+
+  def score
+    read_attribute(:score) || calculate_beenz!
   end
 
   def beenz
-    b = ActiveRecord::Base.connection.execute("
-      select SUM(beenz * weight)/SUM(weight) as score FROM ratings WHERE reviewee_id = #{id}
-    ")[0]['score'].to_f
+    # This gives us a weighted average that decays linearly over time
+    # The less weight you have, the faster you'll decay.
+    b = (score - days_since_creation*0.4)/weight
 
     return case
     when b > 4.75 then 5
@@ -81,5 +90,13 @@ class User < ActiveRecord::Base
     else
       1
     end
+  end
+
+  def calculate_beenz!
+    query = ActiveRecord::Base.connection.execute("
+      select SUM(beenz * weight) as score, SUM(weight) + 1 as weight FROM ratings WHERE reviewee_id = #{id}
+    ")
+    update_attribute(:weight, query[0]['weight'].to_i)
+    update_attribute(:score, query[0]['score'].to_i)
   end
 end

@@ -26,13 +26,13 @@ class Rating < ActiveRecord::Base
   def set_weight
     self.weight = case reviewer.beenz.floor
     when 5
-      16
+      16 + reviewer.weight/20
     when 4
-      8
+      8 + reviewer.weight/50
     when 3
-      4
+      4 + reviewer.weight/80
     when 2
-      2
+      2 + reviewer.weight/100
     else
       1
     end

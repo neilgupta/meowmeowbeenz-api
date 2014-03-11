@@ -43,7 +43,7 @@ class UsersController < ApplicationController
   error 404, "Username not found"
   error 404, "Incorrect password"
   def login
-    u = User.includes(:meows_received).find_by_username(params[:username])
+    u = User.find_by_username(params[:username])
     raise UnauthorizedError.new("Username not found") unless u
     raise UnauthorizedError.new("Incorrect password") unless u.password == params[:password]
 
@@ -76,7 +76,7 @@ class UsersController < ApplicationController
   param :query, String, :required => true
   param_group :token
   def search
-    u = User.includes(:meows_received).where("LOWER(username) LIKE ?", "%#{params[:query].downcase}%")
+    u = User.where("LOWER(username) LIKE ?", "%#{params[:query].downcase}%").where.not(id: current_user.id)
     render json: u, root: false
   end
 end
