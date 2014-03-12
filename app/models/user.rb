@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
 
   has_and_belongs_to_many :ratings
 
+  validates_attachment_content_type :photo, :content_type => /\Aimage/
   validates :username, :presence => true, :uniqueness => { :case_sensitive => false }
   validates :password, :presence => true
 
