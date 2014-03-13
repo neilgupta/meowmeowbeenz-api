@@ -17,6 +17,6 @@ class BeenzValidator < Apipie::Validator::BaseValidator
   end
 
   def description
-    "Must be #{@type}."
+    "Must be Integer or String."
   end
 end
