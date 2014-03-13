@@ -1,11 +1,30 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-# This model initially had no columns defined.  If you add columns to the
-# model remove the '{}' from the fixture names and add the columns immediately
-# below each fixture, per the syntax in the comments below
-#
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+<%
+  require 'bcrypt' 
+  require 'securerandom'
+%>
+
+bubloo:
+  id: 1
+  username: bubloo
+  password: <%= BCrypt::Password.create("hi") %>
+  token: <%= "1#{SecureRandom.hex}" %>
+  score: 0
+  weight: 1
+
+abed:
+  id: 2
+  username: abed
+  password: <%= BCrypt::Password.create("bye") %>
+  token: <%= "2#{SecureRandom.hex}" %>
+  score: 0
+  weight: 1
+
+jeff:
+  id: 3
+  username: jeff
+  password: <%= BCrypt::Password.create("cool") %>
+  token: <%= "3#{SecureRandom.hex}" %>
+  score: 80
+  weight: 16

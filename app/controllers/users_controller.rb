@@ -63,11 +63,11 @@ class UsersController < ApplicationController
   end
 
   api :POST, '/users/:username/give', "Give meowmeowbeenz to a user"
-  param :beenz, Integer, :required => true, :desc => "Number of meowmeowbeenz to give user"
+  param :beenz, 'Beenz', :required => true, :desc => "Number of meowmeowbeenz to give user, must be between 1-5"
   param_group :token
   def give
     u = User.find_by_username(params[:username])
-    current_user.give_beenz_to_user(params[:beenz], u)
+    current_user.give_beenz_to_user(params[:beenz].to_i, u)
 
     render json: u, root: false
   end

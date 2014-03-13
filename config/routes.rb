@@ -1,7 +1,7 @@
 Meowmeowbeenz::Application.routes.draw do
   apipie
 
-  resources :users, only: [:show, :create, :update] do
+  resources :users, only: [:show, :create, :update], param: :username do
     post 'login', on: :collection
     get 'logout', 'search', on: :collection
     post 'give', on: :member

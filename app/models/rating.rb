@@ -8,8 +8,8 @@ class Rating < ActiveRecord::Base
 
   validates :reviewer, :presence => true
   validates :reviewee, :presence => true
-  validates :beenz,    :presence => true, numericality: true
-  validates :weight,   :presence => true, numericality: true
+  validates :beenz,    :presence => true, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 5 }
+  validates :weight,   :presence => true, numericality: { only_integer: true }
   validate :reviewer_cannot_be_reviewee
 
   def reviewer_cannot_be_reviewee
@@ -26,11 +26,11 @@ class Rating < ActiveRecord::Base
   def set_weight
     self.weight = case reviewer.beenz.floor
     when 5
-      16 + reviewer.weight/20
+      5 + reviewer.weight/20
     when 4
-      8 + reviewer.weight/50
+      4 + reviewer.weight/50
     when 3
-      4 + reviewer.weight/80
+      3 + reviewer.weight/80
     when 2
       2 + reviewer.weight/100
     else

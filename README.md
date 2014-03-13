@@ -23,7 +23,6 @@ The following features still need to be added:
 
 * Send push notifications to mobile devices when they are given meowmeowbeenz or when their meowmeowbeenz level changes. I am thinking of using Amazon SNS ([with j7w1 gem](https://github.com/condor/j7w1)) for push notifications.
 * Add news feed functionality (see discussions on [r/meowmeowbeenz](http://www.reddit.com/r/Meowmeowbeenz/))
-* Tests
 
 If there are any features that should be added to this list, create a [new issue](https://github.com/neilgupta/meowmeowbeenz-api/issues).
 
@@ -50,7 +49,8 @@ Access the documentation at http://localhost:3000/docs and the API at http://loc
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
+5. Make sure all tests pass (`rake test`)
+6. Create new Pull Request
 
 ## Credits
 

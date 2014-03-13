@@ -71,7 +71,11 @@ class User < ActiveRecord::Base
   end
 
   def score
-    read_attribute(:score) || calculate_beenz!
+    read_attribute(:score) || (calculate_beenz! && read_attribute(:score))
+  end
+
+  def weight
+    read_attribute(:weight) || (calculate_beenz! && read_attribute(:weight))
   end
 
   def beenz
@@ -85,7 +89,7 @@ class User < ActiveRecord::Base
     when b > 3.75 then 4
     when b > 3.25 then 3.5
     when b > 2.75 then 3
-    when b > 2.25 then 3.5
+    when b > 2.25 then 2.5
     when b > 1.75 then 2
     when b > 1.25 then 1.5
     else
@@ -95,9 +99,9 @@ class User < ActiveRecord::Base
 
   def calculate_beenz!
     query = ActiveRecord::Base.connection.execute("
-      select SUM(beenz * weight) as score, SUM(weight) + 1 as weight FROM ratings WHERE reviewee_id = #{id}
+      select SUM(beenz * weight) as score, SUM(weight) as weight FROM ratings WHERE reviewee_id = #{id}
     ")
-    update_attribute(:weight, query[0]['weight'].to_i)
     update_attribute(:score, query[0]['score'].to_i)
+    update_attribute(:weight, query[0]['weight'].to_i + 1)
   end
 end
