@@ -26,15 +26,16 @@ class Rating < ActiveRecord::Base
   def set_weight
     self.weight = case reviewer.beenz.floor
     when 5
-      5 + reviewer.weight/20
+      # 5's must rule fairly (Every 20 beenz received is an extra vote, but every 20 reviews given is a lost vote)
+      [5 + reviewer.weight/20 - reviewer.meows_given.count/20, 1].max
     when 4
-      4 + reviewer.weight/50
+      4 + reviewer.weight/50 # 4's are almost there! (Every 50 beenz received earns a 4 an extra vote)
     when 3
-      3 + reviewer.weight/80
+      3 + reviewer.weight/100 # A happy 3 is a future 4 (Every 100 beenz received earns a 3 an extra vote)
     when 2
-      2 + reviewer.weight/100
+      2 # Twice as good as a 1, aka not much better
     else
-      1
+      1 # 1's are garbage...
     end
   end
 

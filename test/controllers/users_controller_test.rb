@@ -1,4 +1,5 @@
 class UsersControllerTest < ActionController::TestCase
+  
   test "should get show" do
     get :show, {'username' => 'Bubloo', 'token' => User.find(2).token}
     assert @response.body =~ /\{"username":"bubloo","beenz":/

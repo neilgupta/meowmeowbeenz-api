@@ -1,9 +1,6 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
 
   test "create user" do
     u = User.new(username: "rawr")
@@ -95,4 +92,5 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(users(:abed).beenz_received_from_user(users(:bubloo)), 3)
     assert_equal(users(:abed).beenz_received_from_user(users(:jeff)), 5)
   end
+  
 end
