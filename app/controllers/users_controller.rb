@@ -9,11 +9,12 @@ class UsersController < ApplicationController
   param_group :token
   error 404, "User not found"
   example <<-EOS
-    # The response will look like:
+    # The response to /users/abed will look like:
     {
       "username": "abed",
       "beenz": 5,
-      "photo_url": "http://somephotourl.com/abed.jpg"
+      "photo_url": "http://somephotourl.com/abed.jpg",
+      "created_at": "2014-03-13T05:47:02.284Z"
     }
   EOS
   def show
@@ -32,7 +33,8 @@ class UsersController < ApplicationController
       "username": "jeff",
       "beenz": 1,
       "token": "2309234fe1230d",
-      "photo_url": null
+      "photo_url": null,
+      "created_at": "2014-03-13T05:47:02.284Z"
     }
   EOS
   def create
@@ -56,7 +58,8 @@ class UsersController < ApplicationController
       "username": "jeff",
       "beenz": 1,
       "token": "2309234fe1230d",
-      "photo_url": "http://somephotourl.com/jeff.jpg"
+      "photo_url": "http://somephotourl.com/jeff.jpg",
+      "created_at": "2014-03-13T05:47:02.284Z"
     }
   EOS
   def update
@@ -78,7 +81,8 @@ class UsersController < ApplicationController
       "username": "jeff",
       "beenz": 1,
       "token": "2309234fe1230d",
-      "photo_url": "http://somephotourl.com/jeff.jpg"
+      "photo_url": "http://somephotourl.com/jeff.jpg",
+      "created_at": "2014-03-13T05:47:02.284Z"
     }
   EOS
   def login
@@ -96,8 +100,8 @@ class UsersController < ApplicationController
 
   api :GET, '/users/logout', "Logout as a user"
   param_group :token
-  example <<-EOS
-  This will return a blank response with status code 200
+  description <<-EOS
+  Logs the current user out by invalidating the current token. This will return a blank response with status code 200.
   EOS
   def logout
     current_user.generate_token
@@ -106,15 +110,16 @@ class UsersController < ApplicationController
     head :ok
   end
 
-  api :POST, '/users/:username/give', "Give MeowMeowBeenz to a user"
+  api :POST, '/users/:username/give', "Give MeowMeowBeenz to this user"
   param :beenz, 'Beenz', :required => true, :desc => "Number of MeowMeowBeenz to give user, must be between 1-5"
   param_group :token
   example <<-EOS
-    # The response will look like (assuming you are giving beenz to Abed):
+    # The response to /users/abed/give will look like:
     {
       "username": "abed",
       "beenz": 2.5,
-      "photo_url": "http://somephotourl.com/abed.jpg"
+      "photo_url": "http://somephotourl.com/abed.jpg",
+      "created_at": "2014-03-13T05:47:02.284Z"
     }
   EOS
   def give
@@ -128,17 +133,19 @@ class UsersController < ApplicationController
   param :query, String, :required => true
   param_group :token
   example <<-EOS
-    # The response will look like:
+    # The response to /users/search?query=a will look like:
     [
       {
         "username": "abed",
         "beenz": 5,
-        "photo_url": "http://somephotourl.com/abed.jpg"
+        "photo_url": "http://somephotourl.com/abed.jpg",
+        "created_at": "2014-03-10T14:02:45.927Z"
       },
       {
         "username": "annie",
         "beenz": 4,
-        "photo_url": null
+        "photo_url": null,
+        "created_at": "2014-03-13T05:47:02.284Z"
       }
     ]
   EOS
