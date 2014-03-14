@@ -129,6 +129,47 @@ class UsersController < ApplicationController
     render json: u, root: false
   end
 
+  api :GET, '/users/notifications', "Get list of notifications for current user"
+  param_group :token
+  example <<-EOS
+    # The response will look like:
+    [
+      {
+        "beenz": 4,
+        "reviewer": {
+          "username": "abed",
+          "beenz": 5,
+          "photo_url": "http://somephotourl.com/abed.jpg",
+          "created_at": "2014-03-10T14:02:45.927Z"
+        },
+        reviewee: {
+          "username": "bubloo",
+          "beenz": 3,
+          "photo_url": null,
+          "created_at": "2014-03-15T23:17:00.760Z"
+        }
+      },
+      {
+        "beenz": 1,
+        "reviewer": {
+          "username": "chang",
+          "beenz": 1,
+          "photo_url": "http://somephotourl.com/chang.jpg",
+          "created_at": "2014-03-10T14:02:45.927Z"
+        },
+        reviewee: {
+          "username": "jeff",
+          "beenz": 4,
+          "photo_url": null,
+          "created_at": "2014-03-15T23:17:00.760Z"
+        }
+      }
+    ]
+  EOS
+  def notifications
+    render json: current_user.notifications, root: false
+  end
+
   api :GET, '/users/search', "Search for users"
   param :query, String, :required => true
   param_group :token

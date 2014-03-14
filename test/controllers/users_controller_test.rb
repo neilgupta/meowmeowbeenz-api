@@ -2,7 +2,7 @@ class UsersControllerTest < ActionController::TestCase
   
   test "should get show" do
     get :show, {'username' => 'Bubloo', 'token' => User.find(2).token}
-    assert @response.body =~ /\{"username":"bubloo","beenz":/
+    assert @response.body =~ /^\{"username":"bubloo","beenz":/
     assert_response :success
   end
 
@@ -12,7 +12,7 @@ class UsersControllerTest < ActionController::TestCase
     end
    
     assert_response :success
-    assert @response.body =~ /\{"username":"hippo","beenz":/
+    assert @response.body =~ /^\{"username":"hippo","beenz":/
     assert_not_nil User.find_by_username('Hippo')
   end
 
@@ -21,7 +21,7 @@ class UsersControllerTest < ActionController::TestCase
     post :login, {'username' => "bubloo", 'password' => "hi"}
    
     assert_response :success
-    assert @response.body =~ /\{"username":"bubloo","beenz":/
+    assert @response.body =~ /^\{"username":"bubloo","beenz":/
     assert_not_equal(User.find(1).token, old_token)
   end
 
@@ -41,13 +41,19 @@ class UsersControllerTest < ActionController::TestCase
     end
 
     assert_response :success
-    assert @response.body =~ /\{"username":"abed","beenz":/
+    assert @response.body =~ /^\{"username":"abed","beenz":/
     assert_not_equal(User.find(2).beenz, old_beenz)
   end
 
   test "should search" do
     get :search, {'query' => "ab", 'token' => User.find(1).token}
-    assert @response.body =~ /\[\{"username":"abed","beenz":/
+    assert @response.body =~ /^\[\{"username":"abed","beenz":/
+    assert_response :success
+  end
+
+  test "should return notifications" do
+    get :notifications, {'token' => User.find(1).token}
+    assert @response.body =~ /^\[/ # response must be an array
     assert_response :success
   end
 

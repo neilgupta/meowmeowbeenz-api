@@ -92,5 +92,13 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(users(:abed).beenz_received_from_user(users(:bubloo)), 3)
     assert_equal(users(:abed).beenz_received_from_user(users(:jeff)), 5)
   end
-  
+
+  test "fetch user ratings" do
+    assert_equal(users(:bubloo).notifications.count, 0)
+    users(:bubloo).give_beenz_to_user(3, users(:abed))
+    assert_equal(users(:bubloo).notifications.count, 1)
+    users(:abed).give_beenz_to_user(5, users(:bubloo))
+    assert_equal(users(:bubloo).notifications.count, 2)
+  end
+
 end
