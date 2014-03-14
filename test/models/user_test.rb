@@ -99,6 +99,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(users(:bubloo).notifications.count, 1)
     users(:abed).give_beenz_to_user(5, users(:bubloo))
     assert_equal(users(:bubloo).notifications.count, 2)
+    assert_equal(users(:bubloo).notifications(1).count, 1)
   end
 
 end

@@ -130,6 +130,7 @@ class UsersController < ApplicationController
   end
 
   api :GET, '/users/notifications', "Get list of notifications for current user"
+  param :limit, Integer, :required => false, :desc => "The number of notifications to fetch. Default is 25"
   param_group :token
   example <<-EOS
     # The response will look like:
@@ -155,19 +156,19 @@ class UsersController < ApplicationController
           "username": "chang",
           "beenz": 1,
           "photo_url": "http://somephotourl.com/chang.jpg",
-          "created_at": "2014-03-10T14:02:45.927Z"
+          "created_at": "2014-03-10T17:11:20.666Z"
         },
         reviewee: {
-          "username": "jeff",
-          "beenz": 4,
-          "photo_url": null,
-          "created_at": "2014-03-15T23:17:00.760Z"
+          "username": "abed",
+          "beenz": 5,
+          "photo_url": "http://somephotourl.com/abed.jpg",
+          "created_at": "2014-03-10T14:02:45.927Z"
         }
       }
     ]
   EOS
   def notifications
-    render json: current_user.notifications, root: false
+    render json: current_user.notifications(params[:limit]), root: false
   end
 
   api :GET, '/users/search', "Search for users"

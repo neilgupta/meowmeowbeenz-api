@@ -51,9 +51,9 @@ class User < ActiveRecord::Base
     photo.try(:url)
   end
 
-  def notifications
+  def notifications(limit = 25)
     # Fetch the latest 25 ratings that user has given or received
-    Rating.where("reviewee_id = ? or reviewer_id = ?", id, id).order(updated_at: :desc).limit(25)
+    Rating.where("reviewee_id = ? or reviewer_id = ?", id, id).order(updated_at: :desc).limit(limit.to_i)
   end
 
   def beenz_received_from_user(user)
