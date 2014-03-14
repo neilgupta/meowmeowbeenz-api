@@ -57,4 +57,10 @@ class UsersControllerTest < ActionController::TestCase
     assert_response :success
   end
 
+  test "should return notifications without limit" do
+    get :notifications, {'token' => User.find(1).token}
+    assert @response.body =~ /^\[/ # response must be an array
+    assert_response :success
+  end
+
 end
