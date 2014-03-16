@@ -10,12 +10,7 @@ class UsersController < ApplicationController
   error 404, "User not found"
   example <<-EOS
     # The response to /users/abed will look like:
-    {
-      "username": "abed",
-      "beenz": 5,
-      "photo_url": "http://somephotourl.com/abed.jpg",
-      "created_at": "2014-03-13T05:47:02.284Z"
-    }
+    #{UserSerializer.to_documentation('abed')}
   EOS
   def show
     u = params[:username].downcase == 'me' ? current_user : User.find_by_username(params[:username])
@@ -29,13 +24,7 @@ class UsersController < ApplicationController
   error 403, "This username is already taken"
   example <<-EOS
     # The response will look like:
-    {
-      "username": "jeff",
-      "beenz": 1,
-      "token": "2309234fe1230d",
-      "photo_url": null,
-      "created_at": "2014-03-13T05:47:02.284Z"
-    }
+    #{UserSerializer.to_documentation('jeff', {beenz: 1, include_token: true, include_photo: false})}
   EOS
   def create
     raise UnauthorizedError.new("This username is already taken") if params[:username].downcase == "me" || User.find_by_username(params[:username])
@@ -54,13 +43,7 @@ class UsersController < ApplicationController
   param_group :token
   example <<-EOS
     # The response will look like:
-    {
-      "username": "jeff",
-      "beenz": 1,
-      "token": "2309234fe1230d",
-      "photo_url": "http://somephotourl.com/jeff.jpg",
-      "created_at": "2014-03-13T05:47:02.284Z"
-    }
+    #{UserSerializer.to_documentation('jeff', {include_token: true})}
   EOS
   def update
     current_user.password = params[:password] if params[:password]
@@ -77,13 +60,7 @@ class UsersController < ApplicationController
   error 404, "Incorrect password"
   example <<-EOS
     # The response will look like:
-    {
-      "username": "jeff",
-      "beenz": 1,
-      "token": "2309234fe1230d",
-      "photo_url": "http://somephotourl.com/jeff.jpg",
-      "created_at": "2014-03-13T05:47:02.284Z"
-    }
+    #{UserSerializer.to_documentation('abed', {include_token: true})}
   EOS
   def login
     u = User.find_by_username(params[:username])
@@ -115,12 +92,7 @@ class UsersController < ApplicationController
   param_group :token
   example <<-EOS
     # The response to /users/abed/give will look like:
-    {
-      "username": "abed",
-      "beenz": 2.5,
-      "photo_url": "http://somephotourl.com/abed.jpg",
-      "created_at": "2014-03-13T05:47:02.284Z"
-    }
+    #{UserSerializer.to_documentation('abed')}
   EOS
   def give
     u = User.find_by_username(params[:username])
@@ -132,39 +104,15 @@ class UsersController < ApplicationController
   api :GET, '/users/notifications', "Get list of notifications for current user"
   param :limit, Integer, :required => false, :desc => "The number of notifications to fetch. Default is 25"
   param_group :token
+  description <<-EOS
+  Get a list of MeowMeowBeenz given and received by this user. The reviewer gives MeowMeowBeenz to the reviewee.
+  To determine if the notification is for giving or receiving, just check if the current user is the reviewer or reviewee.
+  EOS
   example <<-EOS
     # The response will look like:
     [
-      {
-        "beenz": 4,
-        "reviewer": {
-          "username": "abed",
-          "beenz": 5,
-          "photo_url": "http://somephotourl.com/abed.jpg",
-          "created_at": "2014-03-10T14:02:45.927Z"
-        },
-        reviewee: {
-          "username": "bubloo",
-          "beenz": 3,
-          "photo_url": null,
-          "created_at": "2014-03-15T23:17:00.760Z"
-        }
-      },
-      {
-        "beenz": 1,
-        "reviewer": {
-          "username": "chang",
-          "beenz": 1,
-          "photo_url": "http://somephotourl.com/chang.jpg",
-          "created_at": "2014-03-10T17:11:20.666Z"
-        },
-        reviewee: {
-          "username": "abed",
-          "beenz": 5,
-          "photo_url": "http://somephotourl.com/abed.jpg",
-          "created_at": "2014-03-10T14:02:45.927Z"
-        }
-      }
+      #{RatingSerializer.to_documentation('abed', 'bubloo', 5, 3.5, {indentation: 1})},
+      #{RatingSerializer.to_documentation('chang', 'abed', 1, 5, {indentation: 1})}
     ]
   EOS
   def notifications
@@ -177,18 +125,9 @@ class UsersController < ApplicationController
   example <<-EOS
     # The response to /users/search?query=a will look like:
     [
-      {
-        "username": "abed",
-        "beenz": 5,
-        "photo_url": "http://somephotourl.com/abed.jpg",
-        "created_at": "2014-03-10T14:02:45.927Z"
-      },
-      {
-        "username": "annie",
-        "beenz": 4,
-        "photo_url": null,
-        "created_at": "2014-03-13T05:47:02.284Z"
-      }
+      #{UserSerializer.to_documentation('abed', {indentation: 1})},
+      #{UserSerializer.to_documentation('annie', {indentation: 1})},
+      #{UserSerializer.to_documentation('britta', {indentation: 1})}
     ]
   EOS
   def search
