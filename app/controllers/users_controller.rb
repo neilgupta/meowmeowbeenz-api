@@ -14,7 +14,7 @@ class UsersController < ApplicationController
   EOS
   def show
     u = params[:username].downcase == 'me' ? current_user : User.find_by_username(params[:username])
-    raise NotFoundError.new("User not found") unless u
+    raise Exceptionally::NotFound.new("User not found") unless u
     render :json => u, root: false
   end
 
@@ -27,7 +27,7 @@ class UsersController < ApplicationController
     #{UserSerializer.to_documentation('jeff', {beenz: 1, include_token: true, include_photo: false})}
   EOS
   def create
-    raise UnauthorizedError.new("This username is already taken") if params[:username].downcase == "me" || User.find_by_username(params[:username])
+    raise Exceptionally::Forbidden.new("This username is already taken") if params[:username].downcase == "me" || User.find_by_username(params[:username])
     
     u = User.new(username: params[:username])
     u.password = params[:password]
@@ -64,8 +64,8 @@ class UsersController < ApplicationController
   EOS
   def login
     u = User.find_by_username(params[:username])
-    raise UnauthorizedError.new("Username not found") unless u
-    raise UnauthorizedError.new("Incorrect password") unless u.password == params[:password]
+    raise Exceptionally::Unauthorized.new("Username not found") unless u
+    raise Exceptionally::Unauthorized.new("Incorrect password") unless u.password == params[:password]
 
     u.generate_token
     u.save!

@@ -41,6 +41,8 @@ GEM
     dotenv (0.10.0)
     erubis (2.7.0)
     eventmachine (1.0.3)
+    exceptionally (1.0.0)
+      rails (>= 3.0.0, < 5.0)
     excon (0.31.0)
     fog (1.20.0)
       builder
@@ -127,6 +129,7 @@ DEPENDENCIES
   active_model_serializers
   apipie-rails
   bcrypt
+  exceptionally
   fog
   foreman
   paperclip

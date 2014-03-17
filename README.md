@@ -60,7 +60,7 @@ It is a brilliant episode, check it out!
 
 ## Author
 
-Neil Gupta https://github.com/neilgupta && http://metamorphium.com
+Neil Gupta [http://metamorphium.com](http://metamorphium.com)
 
 ## License
 
